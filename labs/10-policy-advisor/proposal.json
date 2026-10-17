@@ -1,0 +1,23 @@
+{
+  "intent_summary": "Let curl read the status endpoint on postman-echo.com.",
+  "operations": [
+    {
+      "addRule": {
+        "ruleName": "echo_status_read",
+        "rule": {
+          "name": "echo_status_read",
+          "endpoints": [
+            {
+              "host": "postman-echo.com",
+              "port": 443,
+              "protocol": "rest",
+              "enforcement": "enforce",
+              "rules": [{ "allow": { "method": "GET", "path": "/status/200" } }]
+            }
+          ],
+          "binaries": [{ "path": "/usr/bin/curl" }]
+        }
+      }
+    }
+  ]
+}

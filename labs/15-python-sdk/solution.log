@@ -1,0 +1,62 @@
+Script started on 2026-10-17 13:15:59+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/15-python-sdk/solution.sh" <not executed on terminal>]
+
+[36m# Lab 15 — The Python SDK[0m
+[32m$ [0m[1mopenshell sandbox template delete training-tools[0m
+[32m$ [0m[1mpython3 -m venv /tmp/lab15-venv && /tmp/lab15-venv/bin/pip install -q openshell==0.1.4 && /tmp/lab15-venv/bin/pip show openshell | head -2[0m
+Name: openshell
+Version: 0.1.4
+ERROR: Pipe to stdout was broken
+[32m$ [0m[1mopenshell sandbox template create training-tools --image openshell-training/tools:0.1.4[0m
+[32;1m✓[0m Created sandbox template [1mtraining-tools[0m
+[32m$ [0m[1mcat labs/15-python-sdk/sdk_demo.py[0m
+"""Drive OpenShell from Python: create a sandbox from a template, run a
+command in it, then delete it. Uses the gateway the CLI registered."""
+
+import sys
+
+from openshell import SandboxClient
+
+WORKSPACE = "default"
+TEMPLATE = sys.argv[1] if len(sys.argv) > 1 else "training-tools"
+NAME = sys.argv[2] if len(sys.argv) > 2 else "lab15-sdk"
+
+with SandboxClient.from_active_cluster() as client:
+    print(f"gateway version: {client.health().version}")
+
+    sandbox = client.create_from_template(
+        workspace=WORKSPACE,
+        workload_template=TEMPLATE,
+        name=NAME,
+        labels={"course": "openshell-training", "lab": "15"},
+    )
+    client.wait_ready(sandbox.name, workspace=WORKSPACE, timeout_seconds=180)
+    print(f"sandbox ready: {sandbox.name}")
+
+    try:
+        result = client.exec(
+            sandbox.name,
+            ["sh", "-c", "id -un; cat /etc/os-release | head -1"],
+            workspace=WORKSPACE,
+            no_login_shell=True,
+        )
+        print(result.stdout, end="")
+        print(f"exit code: {result.exit_code}")
+    finally:
+        deletion = client.delete(sandbox.name, workspace=WORKSPACE)
+        client.wait_deleted(
+            sandbox.name,
+            workspace=WORKSPACE,
+            expected_sandbox_id=deletion.sandbox_id,
+        )
+        print("sandbox deleted")
+[32m$ [0m[1m/tmp/lab15-venv/bin/python labs/15-python-sdk/sdk_demo.py training-tools sdk-demo[0m
+gateway version: 0.1.4
+sandbox ready: sdk-demo
+ubuntu
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+exit code: 0
+sandbox deleted
+[32m$ [0m[1mopenshell sandbox template delete training-tools[0m
+[32;1m✓[0m Deleted sandbox template training-tools
+
+Script done on 2026-10-17 13:16:39+01:00 [COMMAND_EXIT_CODE="0"]

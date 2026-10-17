@@ -1,0 +1,19 @@
+# Exceeds the boundary: python3.12 gets the same GitHub access as curl.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/bin, /usr, /lib, /proc, /dev/urandom, /etc, /var/log]
+  read_write: [/tmp, /dev/null]
+landlock:
+  compatibility: best_effort
+network_policies:
+  echo_read:
+    endpoints:
+      - host: postman-echo.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+    binaries:
+      - path: /usr/bin/curl
+      - path: /usr/bin/python3.12

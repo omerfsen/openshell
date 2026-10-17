@@ -1,0 +1,68 @@
+# Protocol-aware rules for Lab 16. Apply with:
+#   openshell policy set <sandbox> --policy labs/16-protocol-rules/policy.yaml --wait
+version: 1
+
+filesystem_policy:
+  include_workdir: true
+  read_only: [/bin, /usr, /lib, /proc, /dev/urandom, /etc, /var/log]
+  read_write: [/tmp, /dev/null]
+
+landlock:
+  compatibility: best_effort
+
+network_policies:
+  # GraphQL: queries are allowed, mutations are not.
+  countries_graphql:
+    endpoints:
+      - host: countries.trevorblades.com
+        port: 443
+        path: /graphql
+        protocol: graphql
+        enforcement: enforce
+        rules:
+          - allow:
+              operation_type: query
+    binaries:
+      - path: /usr/bin/curl
+
+  # MCP: initialization and tool discovery, plus one named tool.
+  deepwiki_mcp:
+    endpoints:
+      - host: mcp.deepwiki.com
+        port: 443
+        path: /mcp
+        protocol: mcp
+        enforcement: enforce
+        rules:
+          - allow: { method: initialize }
+          - allow: { method: notifications/initialized }
+          - allow: { method: tools/list }
+          - allow: { method: tools/call, tool: read_wiki_structure }
+        deny_rules:
+          - { method: tools/call, tool: ask_wiki_question }
+    binaries:
+      - path: /usr/bin/curl
+
+  # WebSocket: upgrade and client text messages on /raw only.
+  ws_echo:
+    endpoints:
+      - host: ws.postman-echo.com
+        port: 443
+        protocol: websocket
+        enforcement: enforce
+        rules:
+          - allow: { method: GET, path: /raw }
+          - allow: { method: WEBSOCKET_TEXT, path: /raw }
+        deny_rules:
+          - { method: "*", path: /socketio }
+    binaries:
+      - path: /usr/bin/curl
+
+  # Native TCP: a plain-text echo service, checked by host, port, and binary only.
+  tcp_echo:
+    endpoints:
+      - host: tcpbin.com
+        port: 4242
+        protocol: tcp
+    binaries:
+      - path: /usr/bin/nc.openbsd

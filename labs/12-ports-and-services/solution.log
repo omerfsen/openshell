@@ -1,0 +1,74 @@
+Script started on 2026-10-17 13:12:13+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/12-ports-and-services/solution.sh" <not executed on terminal>]
+
+[36m# Lab 12 — Ports, forwarding, and exposed services[0m
+[32m$ [0m[1mopenshell sandbox delete web[0m
+[32m$ [0m[1mopenshell sandbox create --name web --from openshell-training/tools:0.1.4 --no-auto-providers --detach -- python3 -m http.server 8000 --bind 127.0.0.1 --directory /tmp[0m
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mweb[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1msleep 2; openshell sandbox exec -n web -- sh -c 'echo "<h1>hello from a sandbox</h1>" > /tmp/index.html'[0m
+^@
+[36m# SSH port forward[0m
+[32m$ [0m[1mopenshell forward start 8000 web -d < /dev/null[0m
+[32;1m✓[0m Forwarding port 8000 to sandbox web in the background
+  Access at: http://127.0.0.1:8000/
+  Stop with: openshell forward stop 8000 web
+[32m$ [0m[1mopenshell forward list; curl -s http://127.0.0.1:8000/[0m
+WORKSPACE SANDBOX BIND      PORT     PID        STATUS
+default   web     127.0.0.1 8000     1234664    [32mrunning[0m
+<h1>hello from a sandbox</h1>
+[32m$ [0m[1mopenshell forward stop 8000 web[0m
+[32;1m✓[0m Stopped forward of port 8000 for sandbox web
+
+[36m# gRPC service forward[0m
+[32m$ [0m[1m(openshell forward service web --target-port 8000 --local 18000 & sleep 3; curl -s http://127.0.0.1:18000/; kill $!)[0m
+[32;1m✓[0m Forwarding 127.0.0.1:18000 -> 127.0.0.1:8000 in sandbox web via gRPC
+<h1>hello from a sandbox</h1>
+
+[36m# Gateway-managed service URL[0m
+[32m$ [0m[1mopenshell service expose web 8000[0m
+[32;1m✓[0m Exposed sandbox [1mweb[0m -> 127.0.0.1:8000
+  URL: [36mhttp://default--web.openshell.localhost:17670/[0m
+[32m$ [0m[1mcurl -s http://default--web.openshell.localhost:17670/[0m
+<h1>hello from a sandbox</h1>
+[32m$ [0m[1mopenshell service list[0m
+[1mSANDBOX[0m  [1mSERVICE[0m  [1mTARGET        [0m  [1mAUTHORIZATION       [0m  [1mURL[0m
+web      -        127.0.0.1:8000  strip                 http://default--web.openshell.localhost:17670/
+[32m$ [0m[1mopenshell service delete web; openshell sandbox delete web[0m
+[32;1m✓[0m Deleted exposed sandbox [1mweb[0m
+[32;1m✓[0m Sandbox web deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:13:11+01:00 [COMMAND_EXIT_CODE="0"]

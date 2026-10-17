@@ -1,0 +1,83 @@
+Script started on 2026-10-17 13:11:21+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/11-policy-prover/solution.sh" <not executed on terminal>]
+
+[36m# Lab 11 — The policy prover[0m
+[32m$ [0m[1mcd labs/11-policy-prover && cat boundary-fs.yaml candidates/fs-write-tmp.yaml[0m
+# Filesystem-only boundary from the prover docs: read /usr and /etc, write nothing.
+version: 1
+filesystem_policy:
+  read_only:
+    - /usr
+    - /etc
+# Exceeds the filesystem boundary: the boundary grants no write access at all.
+version: 1
+filesystem_policy:
+  read_only:
+    - /usr
+  read_write:
+    - /tmp
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/fs-read-usr.yaml --boundary boundary-fs.yaml[0m
+result: within_boundary
+coverage: domains=filesystem,network_l4,network_rest,process,landlock
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/fs-write-tmp.yaml --boundary boundary-fs.yaml[0m
+result: exceeds_boundary
+coverage: domains=filesystem,network_l4,network_rest,process,landlock
+counterexample: filesystem write /tmp
+[2m[exit 1][0m
+
+[36m# Network proofs against the training boundary[0m
+[32m$ [0m[1mcat labs/11-policy-prover/boundary.yaml[0m
+# The most access any training sandbox may ever have. Candidate policies are
+# proven against this file with openshell-prover; anything beyond it fails CI.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/bin, /usr, /lib, /proc, /dev/urandom, /etc, /var/log]
+  read_write: [/tmp, /dev/null]
+landlock:
+  compatibility: best_effort
+network_policies:
+  echo_read:
+    endpoints:
+      - host: postman-echo.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+    binaries:
+      - path: /usr/bin/curl
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/narrow.yaml --boundary boundary.yaml[0m
+result: within_boundary
+coverage: domains=filesystem,network_l4,network_rest,process,landlock
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/extra-binary.yaml --boundary boundary.yaml[0m
+result: exceeds_boundary
+coverage: domains=filesystem,network_l4,network_rest,process,landlock
+counterexample: network binary=/usr/bin/python3.12 ancestor_binary=/ binary_identity_required=true host=postman-echo.com:443 destination_ip=::1:0:0 trusted_gateway=false protocol=rest method=GET path=/
+[2m[exit 1][0m
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/write-method.yaml --boundary boundary.yaml --output json | jq .counterexample[0m
+[1;39m{[0m
+  [1;34m"domain"[0m[1;39m:[0m [0;32m"network"[0m[1;39m,[0m
+  [1;34m"binary"[0m[1;39m:[0m [0;90mnull[0m[1;39m,[0m
+  [1;34m"ancestor_binary"[0m[1;39m:[0m [0;90mnull[0m[1;39m,[0m
+  [1;34m"binary_identity_required"[0m[1;39m:[0m [0;39mfalse[0m[1;39m,[0m
+  [1;34m"host"[0m[1;39m:[0m [0;32m"postman-echo.com"[0m[1;39m,[0m
+  [1;34m"destination_ip"[0m[1;39m:[0m [0;32m"::1:0:0"[0m[1;39m,[0m
+  [1;34m"trusted_gateway"[0m[1;39m:[0m [0;39mfalse[0m[1;39m,[0m
+  [1;34m"port"[0m[1;39m:[0m [0;39m443[0m[1;39m,[0m
+  [1;34m"protocol"[0m[1;39m:[0m [0;32m"rest"[0m[1;39m,[0m
+  [1;34m"method"[0m[1;39m:[0m [0;32m"PUT"[0m[1;39m,[0m
+  [1;34m"path"[0m[1;39m:[0m [0;32m"/"[0m
+[1;39m}[0m
+[32m$ [0m[1mcd labs/11-policy-prover && openshell-prover check candidates/graphql.yaml --boundary boundary.yaml[0m
+result: unsupported
+coverage: domains=filesystem,network_l4,network_rest,process,landlock
+reason: candidate policy rule 'countries_graphql' uses protocol 'graphql'; only L4 TCP and REST are modeled
+[2m[exit 3][0m
+
+[36m# The CI gate[0m
+[32m$ [0m[1mcd labs/11-policy-prover && ./prove-all.sh boundary.yaml candidates/narrow.yaml candidates/extra-binary.yaml candidates/graphql.yaml[0m
+PASS  candidates/narrow.yaml
+FAIL  candidates/extra-binary.yaml  [exceeds_boundary] {"domain":"network","binary":"/usr/bin/python3.12","ancestor_binary":"/","binary_identity_required":true,"host":"postman-echo.com","destination_ip":"::1:0:0","trusted_gateway":false,"port":443,"protocol":"rest","method":"GET","path":"/"}
+FAIL  candidates/graphql.yaml  [unsupported] candidate policy rule 'countries_graphql' uses protocol 'graphql'; only L4 TCP and REST are modeled
+[2m[exit 1][0m
+
+Script done on 2026-10-17 13:12:13+01:00 [COMMAND_EXIT_CODE="0"]

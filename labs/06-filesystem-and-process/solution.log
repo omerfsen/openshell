@@ -1,0 +1,105 @@
+Script started on 2026-10-17 13:02:41+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/06-filesystem-and-process/solution.sh" <not executed on terminal>]
+
+[36m# Lab 06 — Filesystem and process controls[0m
+[32m$ [0m[1mopenshell sandbox delete fs[0m
+[32m$ [0m[1mcat labs/06-filesystem-and-process/policy.yaml[0m
+# A policy file applied at sandbox creation. The filesystem and process
+# sections are locked once the sandbox starts; network rules can change later.
+version: 1
+
+filesystem_policy:
+  include_workdir: true        # the working directory (/home/ubuntu) is read-write
+  read_only:
+    - /usr
+    - /lib
+    - /etc
+    - /proc
+    - /dev/urandom
+  read_write:
+    - /tmp
+    - /dev/null
+
+landlock:
+  compatibility: hard_requirement   # refuse to start if Landlock cannot be applied
+
+process:
+  run_as_user: "1000"
+  run_as_group: "1000"
+
+network_policies: {}
+[32m$ [0m[1mopenshell sandbox create --name fs --from openshell-training/tools:0.1.4 --policy labs/06-filesystem-and-process/policy.yaml --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mfs[0m                                                                                                                                                                                                         [36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K
+[36m# Probe the Landlock boundary[0m
+[32m$ [0m[1mopenshell sandbox exec -n fs -- sh -c 'id; echo a > ~/w && echo home: writable; echo b > /tmp/w && echo tmp: writable; echo c > /etc/x || echo etc: read-only'[0m
+^@uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev)
+home: writable
+tmp: writable
+sh: 1: cannot create /etc/x: Permission denied
+etc: read-only
+[32m$ [0m[1mopenshell sandbox exec -n fs -- ls /opt[0m
+ls: cannot open directory '/opt': Permission denied
+[2m[exit 2][0m
+[32m$ [0m[1mopenshell sandbox exec -n fs -- ls /.openshell[0m
+ls: cannot open directory '/.openshell': Permission denied
+[2m[exit 2][0m
+
+[36m# Adding a path on a live sandbox is saved but not applied[0m
+[32m$ [0m[1msed 's#    - /dev/urandom#    - /dev/urandom\n    - /opt#' labs/06-filesystem-and-process/policy.yaml > /tmp/fs-add.yaml[0m
+[32m$ [0m[1mopenshell policy set fs --policy /tmp/fs-add.yaml --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: 88ee5ca4135e)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+[32m$ [0m[1mopenshell sandbox exec -n fs -- ls /opt[0m
+ls: cannot open directory '/opt': Permission denied
+[2m[exit 2][0m
+
+[36m# Removing a path or changing Landlock is rejected[0m
+[32m$ [0m[1mgrep -v /dev/urandom labs/06-filesystem-and-process/policy.yaml > /tmp/fs-remove.yaml[0m
+[32m$ [0m[1mopenshell policy set fs --policy /tmp/fs-remove.yaml --wait[0m
+Error:   [31m×[0m code: 'Client specified an invalid argument', message: "filesystem read_only path '/dev/urandom' cannot
+  [31m│[0m be removed on a live sandbox"
+
+[2m[exit 1][0m
+
+[36m# Recreate the sandbox to apply startup sections[0m
+[32m$ [0m[1mopenshell sandbox delete fs[0m
+[32;1m✓[0m Sandbox fs deletion accepted; cleanup is pending
+[32m$ [0m[1msleep 2; openshell sandbox create --name fs --from openshell-training/tools:0.1.4 --policy /tmp/fs-add.yaml --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mfs[0m                                                                                                                                                                                                         [36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell sandbox exec -n fs -- ls /opt && echo "/opt is visible now"[0m
+/opt is visible now
+
+[36m# Clean up[0m
+[32m$ [0m[1mopenshell sandbox delete fs[0m
+[32;1m✓[0m Sandbox fs deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:04:12+01:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,25 @@
+# Training provider profile. It declares one bearer credential and the only
+# endpoint where OpenShell may resolve it: httpbin.org, which echoes request
+# headers back so you can watch the real value appear on the wire.
+id: echo-api
+display_name: Echo API (training)
+description: Training profile that binds DEMO_API_TOKEN to httpbin.org only
+category: other
+
+credentials:
+  - name: api_token
+    description: Demo bearer token
+    env_vars: [DEMO_API_TOKEN]
+    required: true
+    auth_style: bearer
+    header_name: authorization
+
+endpoints:
+  - host: httpbin.org
+    port: 443
+    protocol: rest
+    enforcement: enforce
+    access: read-only
+
+binaries:
+  - /usr/bin/curl

@@ -1,0 +1,136 @@
+Script started on 2026-10-17 13:20:03+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/02-sandbox-basics/solution.sh" <not executed on terminal>]
+
+[36m# Lab 02 — Sandbox basics[0m
+[32m$ [0m[1mopenshell sandbox delete basics once[0m
+[32m$ [0m[1mopenshell sandbox create --name basics --no-auto-providers --detach[0m
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mbasics[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell sandbox list[0m
+[1mNAME  [0m  [1mCREATED            [0m  [1mPHASE[0m
+basics  2026-10-17 12:20:08  [32mReady[0m
+
+[36m# One-shot commands; the exit code comes back[0m
+[32m$ [0m[1mopenshell sandbox exec -n basics -- id[0m
+^@uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu)
+[32m$ [0m[1mopenshell sandbox exec -n basics -- sh -c 'touch ~/hello && echo working dir is writable; echo x > /etc/x'[0m
+working dir is writable
+sh: 1: cannot create /etc/x: Permission denied
+[2m[exit 2][0m
+[32m$ [0m[1mopenshell sandbox exec -n basics -- sh -c "command -v curl || echo no curl in the default image"[0m
+no curl in the default image
+[32m$ [0m[1mopenshell sandbox exec -n basics -- sh -c 'exit 3'; echo "exit code: $?"[0m
+exit code: 3
+[32m$ [0m[1mecho "piped stdin" | openshell sandbox exec -n basics -- cat[0m
+piped stdin
+[32m$ [0m[1mopenshell sandbox exec -n basics --env GREETING=merhaba -- sh -c 'echo $GREETING'[0m
+merhaba
+
+[36m# Inspect[0m
+[32m$ [0m[1mopenshell sandbox get basics | sed -n '1,/^Policy:/p'[0m
+Sandbox:
+
+  Id: db7d7b8f-b099-4ef5-ba92-f237c4ba06a4
+  Name: basics
+  Phase: Ready
+  Resource version: 15
+  Restart policy: never
+  Main process instance: a987853f-33a7-4844-bf7e-b7bcdb75261a
+  Last exit code: -
+  Restart count: 0
+  Next restart: -
+  Annotations: 
+    internal.openshell.ai/auth-epoch: 1
+    internal.openshell.ai/gateway-token-id: 3477f9db-3b5f-4412-ad83-656a3a030b96
+    internal.openshell.ai/runtime-generation: a6c27696-7e35-4daf-9335-8fb77066fb3c
+  Conditions:
+    - Ready: True (DependenciesReady) - Supervisor session connected
+    - ConfigurationReady: True (ConfigurationAccepted)
+  Policy source: sandbox
+  Revision: 1
+
+Policy:
+
+[36m# Stop keeps the workspace; start brings it back[0m
+[32m$ [0m[1mopenshell sandbox stop basics && openshell sandbox list[0m
+[32;1m✓[0m Stopped sandbox basics
+[1mNAME  [0m  [1mCREATED            [0m  [1mPHASE[0m
+basics  2026-10-17 12:20:08  Stopped
+[32m$ [0m[1mopenshell sandbox start basics && openshell sandbox exec -n basics -- sh -c "ls ~"[0m
+[32;1m✓[0m Started sandbox basics
+hello
+
+[36m# Throwaway sandbox[0m
+[32m$ [0m[1mopenshell sandbox create --name once --no-auto-providers --no-keep --no-tty -- sh -c 'echo hello from $(hostname) as $(id -un)'[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1monce[0m                                                                                                                                                                                                       [36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mnvcr.io/nvidia/base/ubuntu:24.04[0m (0s)                                                      [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2Khello from f046235707b9 as ubuntu
+[32;1m✓[0m Deleted sandbox once
+
+[36m# Clean up[0m
+[32m$ [0m[1mopenshell sandbox delete basics[0m
+[32;1m✓[0m Sandbox basics deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:21:24+01:00 [COMMAND_EXIT_CODE="0"]

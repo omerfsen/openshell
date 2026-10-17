@@ -1,0 +1,36 @@
+Script started on 2026-10-17 13:19:19+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/18-cleanup/solution.sh" <not executed on terminal>]
+
+[36m# Lab 18 — Clean up[0m
+[32m$ [0m[1mscripts/cleanup.sh[0m
+Deleting course sandboxes...
+Deleting course providers, profiles, and templates...
+  provider echo
+  provider lab08-echo
+  provider openrouter
+  provider lab17-fake
+  provider lab17-live
+  profile echo-api
+  profile openrouter-training
+  template training-tools
+  template lab13-tools
+  template lab15-tools
+Removing global overrides set by the labs...
+  global policy
+  global setting proposal_approval_mode
+  global setting agent_policy_proposals_enabled
+  global setting ocsf_json_enabled
+Done.
+[32m$ [0m[1mopenshell sandbox list; openshell provider list; openshell profile list[0m
+No sandboxes found.
+No providers found.
+No profiles found.
+[32m$ [0m[1mopenshell status[0m
+[36;1mServer Status[0m
+
+  [2mGateway:[0m openshell
+  [2mServer:[0m https://127.0.0.1:17670
+  [2mStatus:[0m [32mConnected[0m
+  [2mAuthentication:[0m [32mAuthenticated[0m (mTLS transport)
+  [2mVersion:[0m 0.1.4
+
+Script done on 2026-10-17 13:19:32+01:00 [COMMAND_EXIT_CODE="0"]

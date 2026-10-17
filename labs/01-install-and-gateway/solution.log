@@ -1,0 +1,87 @@
+Script started on 2026-10-17 12:55:52+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/01-install-and-gateway/solution.sh" <not executed on terminal>]
+
+[36m# Lab 01 — Install OpenShell and meet the gateway[0m
+
+[36m# Installed with: curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/v0.1.4/install.sh | OPENSHELL_VERSION=v0.1.4 sh[0m
+[32m$ [0m[1mopenshell --version; openshell-gateway --version; openshell-prover --version[0m
+openshell 0.1.4
+openshell-gateway 0.1.4
+openshell-prover 0.1.4
+[32m$ [0m[1mopenshell status[0m
+[36;1mServer Status[0m
+
+  [2mGateway:[0m openshell
+  [2mServer:[0m https://127.0.0.1:17670
+  [2mStatus:[0m [32mConnected[0m
+  [2mAuthentication:[0m [32mAuthenticated[0m (mTLS transport)
+  [2mVersion:[0m 0.1.4
+[32m$ [0m[1mopenshell gateway list[0m
+  [1mNAME     [0m  [1mENDPOINT               [0m  [1mTYPE [0m  [1mSOURCE[0m  [1mAUTH[0m
+[32m* openshell  https://127.0.0.1:17670  local  user    mtls[0m
+[32m$ [0m[1mopenshell gateway info[0m
+[36;1mGateway Info[0m
+
+  [2mGateway:[0m openshell
+  [2mServer:[0m https://127.0.0.1:17670
+  [2mStatus:[0m healthy
+  [2mVersion:[0m 0.1.4
+  [2mCompute drivers:[0m
+    docker
+      [2mDriver version:[0m 0.1.4
+  [2mExtensions:[0m
+    docker (compute-driver)
+      [2mImplementation:[0m openshell/docker 0.1.4 (protocol 1.0)
+      [2mCapabilities:[0m openshell.compute.contract
+      [2mRequires gateway:[0m openshell.compute.contract
+    openshell-driver-db-credstore (credential-driver)
+      [2mImplementation:[0m openshell/openshell-driver-db-credstore 0.1.4 (protocol 1.0)
+      [2mCapabilities:[0m openshell.credentials.contract
+      [2mRequires gateway:[0m openshell.credentials.contract
+    openshell/regex (supervisor-middleware)
+      [2mImplementation:[0m openshell/regex 0.1.4 (protocol 1.0)
+      [2mCapabilities:[0m openshell.supervisor-middleware.contract
+      [2mRequires gateway:[0m openshell.supervisor-middleware.contract
+[32m$ [0m[1mopenshell doctor check[0m
+Checking system prerequisites...
+
+  Docker ............. ok (version 29.9.1)
+  DOCKER_HOST ........ (not set, using default socket)
+
+All checks passed.
+[32m$ [0m[1msystemctl --user --no-pager status openshell-gateway | head -5[0m
+● openshell-gateway.service - OpenShell Gateway
+     Loaded: loaded (/usr/lib/systemd/user/openshell-gateway.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2026-10-17 11:09:28 BST; 1h 46min ago
+       Docs: https://github.com/NVIDIA/OpenShell
+   Main PID: 1176 (openshell-gatew)
+
+[36m# Preflight a gateway config before restarting the service[0m
+[32m$ [0m[1mcat labs/01-install-and-gateway/gateway.toml[0m
+# Example gateway configuration for the local Debian/Ubuntu gateway.
+# Copy to ~/.config/openshell/gateway.toml, preflight, then restart the
+# openshell-gateway user service. Omit the file to keep built-in defaults.
+[openshell]
+version = 2
+
+[openshell.gateway]
+bind_address   = "127.0.0.1:17670"
+log_level      = "info"
+compute_driver = "docker"
+
+[openshell.drivers.docker]
+socket_path        = "/var/run/docker.sock"
+# Sandboxes created without --from use the training tools image.
+default_image      = "openshell-training/tools:0.1.4"
+image_pull_policy  = "if_not_present"
+sandbox_pids_limit = 1024
+[32m$ [0m[1mopenshell-gateway config preflight --path labs/01-install-and-gateway/gateway.toml && echo valid[0m
+valid
+[32m$ [0m[1msed 's/compute_driver = "docker"/compute_drivers = ["docker"]/' labs/01-install-and-gateway/gateway.toml > /tmp/bad.toml[0m
+[32m$ [0m[1mopenshell-gateway config preflight --path /tmp/bad.toml[0m
+Error:   [31m×[0m gateway config preflight failed: path='/tmp/bad.toml' category=malformed detected_version=2; the file
+  [31m│[0m was preserved unchanged; migrate it before restarting the gateway: https://docs.nvidia.com/openshell/
+  [31m│[0m latest/how-it-works/gateways/configuration#migrate-to-schema-version-2
+
+[2m[exit 1][0m
+
+Script done on 2026-10-17 12:56:37+01:00 [COMMAND_EXIT_CODE="0"]

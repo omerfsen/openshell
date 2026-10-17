@@ -1,0 +1,109 @@
+Script started on 2026-10-17 13:18:17+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/17-run-an-agent/solution.sh" <not executed on terminal>]
+
+[36m# Lab 17 — Run a real AI agent (credential path shown with a fake key)[0m
+[32m$ [0m[1mopenshell sandbox delete agent-check; openshell provider delete openrouter; openshell profile delete openrouter-training[0m
+[32m$ [0m[1mcat labs/17-run-an-agent/openrouter-training.yaml[0m
+# OpenRouter provider profile for the training, adapted from NVIDIA's example
+# (providers/openrouter.yaml at v0.1.4). Changes: a separate id, and curl added
+# to `binaries` so you can test the credential path before running an agent.
+#
+# Credential scope: OPENROUTER_API_KEY, sent as a bearer token to openrouter.ai
+# and nowhere else.
+id: openrouter-training
+display_name: OpenRouter (training)
+description: OpenRouter inference API for OpenCode and curl
+category: inference
+inference_capable: true
+credentials:
+  - name: api_key
+    description: OpenRouter API key
+    env_vars: [OPENROUTER_API_KEY]
+    required: true
+    auth_style: bearer
+    header_name: authorization
+discovery:
+  credentials: [api_key]
+endpoints:
+  - host: openrouter.ai
+    port: 443
+    protocol: rest
+    access: read-write
+    enforcement: enforce
+binaries:
+  - /usr/local/bin/opencode
+  - /usr/bin/curl
+[32m$ [0m[1mopenshell profile import -f labs/17-run-an-agent/openrouter-training.yaml[0m
+Imported 1 provider profile.
+
+[36m# Use --from-existing with your real OPENROUTER_API_KEY; this replay uses a fake key[0m
+[32m$ [0m[1mopenshell provider create --name openrouter --type openrouter-training --credential OPENROUTER_API_KEY=sk-or-fake-training-key[0m
+[32;1m✓[0m Created provider openrouter
+[32m$ [0m[1mopenshell sandbox create --name agent-check --from openshell-training/tools:0.1.4 --provider openrouter --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1magent-check[0m                                                                                                                                                                                                [36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell sandbox exec -n agent-check -- sh -c 'echo "$OPENROUTER_API_KEY"'[0m
+^@openshell:resolve:env:v14479847203011121632_OPENROUTER_API_KEY
+[32m$ [0m[1mopenshell sandbox exec -n agent-check -- sh -c 'curl -s -H "Authorization: Bearer $OPENROUTER_API_KEY" https://openrouter.ai/api/v1/key'; echo[0m
+{"error":{"message":"Missing Authentication header","code":401}}
+
+[36m# The agent image runs as UID 1000 inside the boundary[0m
+[32m$ [0m[1mopenshell sandbox create --name agent-probe --from ghcr.io/anomalyco/opencode:1.19.3 --no-auto-providers --no-keep --no-tty -- sh -c 'id; opencode --version'[0m
+                                                                                                              [36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1magent-probe[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mghcr.io/anomalyco/opencode:1.19.3[0m (0s)                                                     [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mghcr.io/anomalyco/opencode:1.19.3[0m (0s)                                                     [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mghcr.io/anomalyco/opencode:1.19.3[0m (0s)                                                     [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2Kuid=1000 gid=1000 groups=1000
+1.19.3
+[32;1m✓[0m Sandbox agent-probe deletion accepted; cleanup is pending
+
+[36m# With a real key: openshell sandbox create --name agent --from ghcr.io/anomalyco/opencode:1.19.3 --provider openrouter -- opencode -m openrouter/nvidia/nemotron-3.5-lightning:free[0m
+[32m$ [0m[1mopenshell sandbox delete agent-check; openshell provider delete openrouter; openshell profile delete openrouter-training[0m
+[32;1m✓[0m Sandbox agent-check deletion accepted; cleanup is pending
+[32;1m✓[0m Deleted provider openrouter
+[32;1m✓[0m Deleted provider profile openrouter-training
+
+Script done on 2026-10-17 13:19:19+01:00 [COMMAND_EXIT_CODE="0"]

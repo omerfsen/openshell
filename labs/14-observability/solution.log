@@ -1,0 +1,82 @@
+Script started on 2026-10-17 13:14:36+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/14-observability/solution.sh" <not executed on terminal>]
+
+[36m# Lab 14 — Observability[0m
+[32m$ [0m[1mopenshell sandbox delete obs[0m
+[32m$ [0m[1mopenshell sandbox create --name obs --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mobs[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell policy update obs --rule-name echo_api --binary /usr/bin/curl --add-endpoint postman-echo.com:443:read-only:rest:enforce --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: 6808a1458ec2)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+[32m$ [0m[1mopenshell sandbox exec -n obs -- sh -c 'curl -s -o /dev/null https://postman-echo.com/get; curl -s -o /dev/null -X POST https://postman-echo.com/get; curl -s -o /dev/null --max-time 5 https://example.com'[0m
+^@[2m[exit 7][0m
+
+[36m# Shorthand OCSF events[0m
+[32m$ [0m[1msleep 2; openshell logs obs --since 5m --source sandbox | grep -E 'NET:|HTTP:'[0m
+Warning: log buffer contains only the last 49 lines; --since results may be incomplete.
+[1792239282.412] [sandbox] [OCSF ] [ocsf] NET:LISTEN [INFO] 127.0.0.1:3128
+[1792239282.461] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] 127.0.0.1:17670
+[1792239302.155] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] ALLOWED /usr/bin/curl(0) -> postman-echo.com:443 [policy:echo_api engine:opa]
+[1792239302.213] [sandbox] [OCSF ] [ocsf] HTTP:GET [INFO] ALLOWED GET http://postman-echo.com:443/get [policy:echo_api engine:l7]
+[1792239302.340] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] ALLOWED /usr/bin/curl(0) -> postman-echo.com:443 [policy:echo_api engine:opa]
+[1792239302.376] [sandbox] [OCSF ] [ocsf] HTTP:POST [MED] DENIED POST http://postman-echo.com:443/get [policy:echo_api engine:l7] [reason:L7_REQUEST deny POST postman-echo.com:443/get reason=POST /get not permitted by policy]
+[1792239302.391] [sandbox] [OCSF ] [ocsf] NET:REFUSE [MED] DENIED example.com [reason:policy_dns_ineligible]
+[1792239302.393] [sandbox] [OCSF ] [ocsf] NET:OPEN [MED] DENIED /usr/bin/curl(0) -> example.com:443 [reason:transparent_tcp_policy_denied]
+[32m$ [0m[1mopenshell logs obs --since 1h --source sandbox | grep DENIED | grep -oE '(NET|HTTP):[A-Z]+ .*' | sort | uniq -c[0m
+Warning: log buffer contains only the last 49 lines; --since results may be incomplete.
+      1 HTTP:POST [MED] DENIED POST http://postman-echo.com:443/get [policy:echo_api engine:l7] [reason:L7_REQUEST deny POST postman-echo.com:443/get reason=POST /get not permitted by policy]
+      1 NET:OPEN [MED] DENIED /usr/bin/curl(0) -> example.com:443 [reason:transparent_tcp_policy_denied]
+      1 NET:REFUSE [MED] DENIED example.com [reason:policy_dns_ineligible]
+
+[36m# Full OCSF JSON from the supervisor container[0m
+[32m$ [0m[1mopenshell settings set obs --key ocsf_json_enabled --value true[0m
+[32;1m✓[0m Set sandbox setting ocsf_json_enabled=true for obs (revision 1)
+[32m$ [0m[1msleep 12; openshell sandbox exec -n obs -- curl -s -o /dev/null --max-time 5 https://example.com[0m
+[2m[exit 7][0m
+[32m$ [0m[1mSUP=$(docker ps --format '{{.Names}}' | grep -- '--obs-.*-supervisor$'); docker logs --since 1m "$SUP" 2>&1 | grep ' OCSF-JSON ' | grep '"class_uid":4001' | tail -1 | sed 's/.* OCSF-JSON //' | jq '{class_uid, class_name, activity_name, severity, action, dst_endpoint}'[0m
+[1;39m{[0m
+  [1;34m"class_uid"[0m[1;39m:[0m [0;39m4001[0m[1;39m,[0m
+  [1;34m"class_name"[0m[1;39m:[0m [0;32m"Network Activity"[0m[1;39m,[0m
+  [1;34m"activity_name"[0m[1;39m:[0m [0;32m"Open"[0m[1;39m,[0m
+  [1;34m"severity"[0m[1;39m:[0m [0;32m"Medium"[0m[1;39m,[0m
+  [1;34m"action"[0m[1;39m:[0m [0;32m"Denied"[0m[1;39m,[0m
+  [1;34m"dst_endpoint"[0m[1;39m:[0m [1;39m{[0m
+    [1;34m"domain"[0m[1;39m:[0m [0;32m"example.com"[0m[1;39m,[0m
+    [1;34m"ip"[0m[1;39m:[0m [0;32m"198.18.0.3"[0m[1;39m,[0m
+    [1;34m"port"[0m[1;39m:[0m [0;39m443[0m
+  [1;39m}[0m
+[1;39m}[0m
+[32m$ [0m[1mopenshell sandbox delete obs[0m
+[32;1m✓[0m Sandbox obs deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:15:59+01:00 [COMMAND_EXIT_CODE="0"]

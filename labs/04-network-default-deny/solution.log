@@ -1,0 +1,90 @@
+Script started on 2026-10-17 12:59:23+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/04-network-default-deny/solution.sh" <not executed on terminal>]
+
+[36m# Lab 04 — Default-deny networking and binary-scoped rules[0m
+[32m$ [0m[1mopenshell sandbox delete net[0m
+[32m$ [0m[1mopenshell sandbox create --name net --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mnet[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠴[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠴[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K
+[36m# Everything is denied by default[0m
+[32m$ [0m[1mopenshell sandbox exec -n net -- curl -sS --max-time 8 https://postman-echo.com/get[0m
+^@curl: (7) Failed to connect to postman-echo.com port 443 after 18 ms: Couldn't connect to server
+[2m[exit 7][0m
+[32m$ [0m[1msleep 2; openshell logs net --since 5m --source sandbox | grep -E 'NET:|HTTP:' | tail -3[0m
+Warning: log buffer contains only the last 33 lines; --since results may be incomplete.
+[1792238369.701] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] 127.0.0.1:17670
+[1792238375.135] [sandbox] [OCSF ] [ocsf] NET:REFUSE [MED] DENIED postman-echo.com [reason:policy_dns_ineligible]
+[1792238375.140] [sandbox] [OCSF ] [ocsf] NET:OPEN [MED] DENIED /usr/bin/curl(0) -> postman-echo.com:443 [reason:transparent_tcp_policy_denied]
+
+[36m# Allow one host for one binary[0m
+[32m$ [0m[1mopenshell policy update net --rule-name echo_api --binary /usr/bin/curl --add-endpoint postman-echo.com:443 --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: e1f04a6f4f03)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+[32m$ [0m[1mopenshell sandbox exec -n net -- curl -s https://postman-echo.com/get | jq -c '{url}'[0m
+[1;39m{[0m[1;34m"url"[0m[1;39m:[0m[0;32m"https://postman-echo.com/get"[0m[1;39m}[0m
+[32m$ [0m[1mopenshell sandbox exec -n net -- python3 -c 'import urllib.request; urllib.request.urlopen("https://postman-echo.com/get")' 2>&1 | tail -1[0m
+urllib.error.URLError: <urlopen error [Errno 13] Permission denied>
+[32m$ [0m[1msleep 2; openshell logs net --since 2m --source sandbox | grep -E 'NET:OPEN' | tail -2[0m
+Warning: log buffer contains only the last 64 lines; --since results may be incomplete.
+[1792238395.448] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] ALLOWED /usr/bin/curl(0) -> postman-echo.com:443 [policy:echo_api engine:opa]
+[1792238402.686] [sandbox] [OCSF ] [ocsf] NET:OPEN [MED] DENIED /usr/bin/python3.12(0) -> postman-echo.com:443 [reason:transparent_tcp_policy_denied]
+
+[36m# The metadata address can never be allowed; sandbox loopback works[0m
+[32m$ [0m[1mopenshell policy update net --rule-name meta --binary /usr/bin/curl --add-endpoint 169.254.169.254:80 --wait[0m
+Error:   [31m×[0m code: 'Client specified an invalid argument', message: "proposed rule endpoint host '169.254.169.254' is
+  [31m│[0m an always-blocked address (loopback/link-local/unspecified); the proxy will deny traffic to this
+  [31m│[0m destination regardless of policy"
+
+[2m[exit 1][0m
+[32m$ [0m[1mopenshell sandbox exec -n net -- sh -c 'python3 -m http.server 9000 --bind 127.0.0.1 >/dev/null 2>&1 & sleep 1; curl -s -o /dev/null -w "loopback %{http_code}\n" http://127.0.0.1:9000/'[0m
+loopback 200
+
+[36m# Remove the rule again[0m
+[32m$ [0m[1mopenshell policy update net --remove-rule echo_api --wait[0m
+[32;1m✓[0m Policy version 3 submitted (hash: a45a8ff3564f)
+[32;1m✓[0m Policy version 3 loaded (active version: 3)
+[32m$ [0m[1mopenshell policy list net[0m
+VERSION  HASH           STATUS       CREATED                  ERROR
+3        a45a8ff3564f   Loaded       1792238430290            
+2        e1f04a6f4f03   Superseded   1792238388919            
+1        a45a8ff3564f   Superseded   1792238369608            
+[32m$ [0m[1mopenshell sandbox delete net[0m
+[32;1m✓[0m Sandbox net deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:00:54+01:00 [COMMAND_EXIT_CODE="0"]

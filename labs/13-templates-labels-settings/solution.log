@@ -1,0 +1,89 @@
+Script started on 2026-10-17 13:13:11+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/13-templates-labels-settings/solution.sh" <not executed on terminal>]
+
+[36m# Lab 13 — Templates, labels, and settings[0m
+[32m$ [0m[1mopenshell sandbox delete t-dev t-prod; openshell sandbox template delete training-tools[0m
+[32m$ [0m[1mopenshell sandbox template create training-tools --image openshell-training/tools:0.1.4 --cpu 1 --memory 1Gi --env COURSE=openshell-training --label course=openshell-training[0m
+[32;1m✓[0m Created sandbox template [1mtraining-tools[0m
+[32m$ [0m[1mopenshell sandbox template list[0m
+[1mNAME          [0m  [1mIMAGE                         [0m  [1mCPU       [0m  [1mMEMORY    [0m  [1mGPU  [0m  [1mREADY       [0m  [1mBURST[0m  [1mLABELS[0m
+training-tools  openshell-training/tools:0.1.4  1           1Gi         -      -             -      course=openshell-training
+[32m$ [0m[1mopenshell sandbox create --name t-dev --template training-tools --label env=dev --label team=a --no-auto-providers --detach[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mt-dev[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32m$ [0m[1mopenshell sandbox create --name t-prod --template training-tools --label env=prod --label team=a --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mt-prod[0m                                                                                                                                                                                                     [36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell sandbox exec -n t-dev -- sh -c 'echo $COURSE; command -v curl'[0m
+openshell-training
+/usr/bin/curl
+[32m$ [0m[1mopenshell sandbox create --name t-bad --template training-tools --from ubuntu:24.04[0m
+[1m[31merror:[0m the argument '[33m--template <TEMPLATE>[0m' cannot be used with '[33m--from <FROM>[0m'
+
+[1m[4mUsage:[0m [1mopenshell sandbox create[0m [1m--name[0m <NAME> [1m--template[0m <TEMPLATE> [1m[--[0m <COMMAND>...[1m][0m
+
+For more information, try '[1m--help[0m'.
+[2m[exit 2][0m
+
+[36m# Select by label[0m
+[32m$ [0m[1mopenshell sandbox list --selector env=dev[0m
+[1mNAME [0m  [1mCREATED            [0m  [1mPHASE[0m
+t-dev  2026-10-17 12:13:30  [32mReady[0m
+[32m$ [0m[1mopenshell sandbox list --selector team=a[0m
+[1mNAME  [0m  [1mCREATED            [0m  [1mPHASE[0m
+t-dev   2026-10-17 12:13:30  [32mReady[0m
+t-prod  2026-10-17 12:13:38  [32mReady[0m
+
+[36m# Settings: per sandbox and gateway-wide[0m
+[32m$ [0m[1mopenshell settings set t-dev --key ocsf_json_enabled --value true[0m
+[32;1m✓[0m Set sandbox setting ocsf_json_enabled=true for t-dev (revision 1)
+[32m$ [0m[1mopenshell settings set --global --key proposal_approval_mode --value manual --yes[0m
+[32;1m✓[0m Set global setting proposal_approval_mode=manual (revision 23)
+[32m$ [0m[1mopenshell settings get t-dev[0m
+Sandbox:       t-dev
+Config Rev:    4150681164029888157
+Policy Source: sandbox
+Policy Hash:   a45a8ff3564f00ae26cbd66f1131f37eedd8b54a66fbfec103d65a204c19c6e8
+Settings:
+  agent_policy_proposals_enabled = <unset> (unset)
+  ocsf_json_enabled = true (sandbox)
+  ocsf_schema_version = <unset> (unset)
+  proposal_approval_mode = manual (global)
+[32m$ [0m[1mopenshell settings delete --global --key proposal_approval_mode --yes; openshell settings delete t-dev --key ocsf_json_enabled[0m
+[32;1m✓[0m Deleted global setting proposal_approval_mode (revision 24)
+[32;1m✓[0m Deleted sandbox setting ocsf_json_enabled for t-dev (revision 2)
+[32m$ [0m[1mopenshell sandbox delete t-dev t-prod; openshell sandbox template delete training-tools[0m
+[32;1m✓[0m Deleted sandbox t-dev
+[32;1m✓[0m Sandbox t-prod deletion accepted; cleanup is pending
+[32;1m✓[0m Deleted sandbox template training-tools
+
+Script done on 2026-10-17 13:14:36+01:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,24 @@
+# A policy file applied at sandbox creation. The filesystem and process
+# sections are locked once the sandbox starts; network rules can change later.
+version: 1
+
+filesystem_policy:
+  include_workdir: true        # the working directory (/home/ubuntu) is read-write
+  read_only:
+    - /usr
+    - /lib
+    - /etc
+    - /proc
+    - /dev/urandom
+  read_write:
+    - /tmp
+    - /dev/null
+
+landlock:
+  compatibility: hard_requirement   # refuse to start if Landlock cannot be applied
+
+process:
+  run_as_user: "1000"
+  run_as_group: "1000"
+
+network_policies: {}

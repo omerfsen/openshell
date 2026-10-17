@@ -1,0 +1,30 @@
+Script started on 2026-10-17 12:55:31+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/00-prepare-ubuntu/solution.sh" <not executed on terminal>]
+
+[36m# Lab 00 — Prepare a fresh Ubuntu 24.04 host[0m
+[32m$ [0m[1m. /etc/os-release; echo "$PRETTY_NAME"; uname -r[0m
+Ubuntu 24.04.4 LTS
+6.8.0-147-generic
+[32m$ [0m[1mcat /sys/kernel/security/lsm; echo[0m
+lockdown,capability,landlock,yama,apparmor
+[32m$ [0m[1mdocker version --format 'Docker Engine {{.Server.Version}}'[0m
+Docker Engine 29.9.1
+[32m$ [0m[1mid -nG | tr " " "\n" | grep -x docker[0m
+docker
+
+[36m# The course's host check[0m
+[32m$ [0m[1mscripts/check-host.sh[0m
+OpenShell host check
+  [ok]   OS: Ubuntu 24.04.4 LTS
+  [ok]   architecture: x86_64
+  [ok]   kernel: 6.8.0-147-generic (>= 6.2 for Landlock ABI 3)
+  [ok]   Landlock LSM is enabled
+  [ok]   cgroups v2
+  [ok]   Docker Engine 29.9.1 (>= 28.0)
+  [ok]   curl
+  [ok]   git
+  [ok]   jq
+  [ok]   bats 1.10.0 (lab tests)
+  [ok]   /dev/kvm present (optional MicroVM runtime)
+Host is ready for OpenShell.
+
+Script done on 2026-10-17 12:55:52+01:00 [COMMAND_EXIT_CODE="0"]

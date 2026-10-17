@@ -1,0 +1,22 @@
+# Shipped inside the image at /etc/openshell/policy.yaml. OpenShell uses it
+# only when the sandbox has no saved policy (no --policy, no global policy).
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only: [/usr, /lib, /etc, /proc, /dev/urandom]
+  read_write: [/tmp, /dev/null]
+landlock:
+  compatibility: best_effort
+network_policies:
+  echo_get:
+    endpoints:
+      - host: postman-echo.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow:
+              method: GET
+              path: /get
+    binaries:
+      - path: /usr/bin/curl

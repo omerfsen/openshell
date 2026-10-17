@@ -1,0 +1,4 @@
+# Files the labs create while you work through them
+labs/09-files-and-ssh/sample-project/build/
+labs/09-files-and-ssh/sample-project/*.log
+lab09-out/

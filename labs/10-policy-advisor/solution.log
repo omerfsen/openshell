@@ -1,0 +1,175 @@
+Script started on 2026-10-17 13:09:02+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/10-policy-advisor/solution.sh" <not executed on terminal>]
+
+[36m# Lab 10 — The policy advisor[0m
+[32m$ [0m[1mopenshell sandbox delete adv auto[0m
+[32m$ [0m[1mopenshell sandbox create --name adv --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1madv[0m                                                                                                                                                                                                        [36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K
+[36m# A denied connection becomes a draft proposal[0m
+[32m$ [0m[1mopenshell sandbox exec -n adv -- curl -sS --max-time 8 https://postman-echo.com/get[0m
+^@curl: (7) Failed to connect to postman-echo.com port 443 after 9 ms: Couldn't connect to server
+[2m[exit 7][0m
+[32m$ [0m[1mtimeout 60 bash -c "until openshell rule get adv --status pending | grep -q Chunk:; do sleep 2; done"; openshell rule get adv --status pending[0m
+[36;1mNetwork Rules:[0m  (version 1, 1 chunk)
+
+  [2mChunk:[0m b6fe1f0e-a629-4e04-bbc1-be5f9622619a
+  [2mStatus:[0m [33mpending[0m
+  [2mRule:[0m allow_postman_echo_com_443
+  [2mBinary:[0m /usr/bin/curl
+  [2mConfidence:[0m 65%
+  [2mRationale:[0m Allow curl to connect to postman-echo.com:443 (HTTPS).
+  [2mProver:[0m [36mprover: no new findings[0m
+  [2mCandidate:[0m c4572f2d0f53
+  [2mEndpoints:[0m postman-echo.com:443 [L4]
+  [2mBinaries:[0m /usr/bin/curl
+
+[32m$ [0m[1mCHUNK=$(openshell rule get adv --status pending | awk '/Chunk:/ {print $2; exit}'); openshell rule approve adv --chunk-id $CHUNK[0m
+[32;1mOK[0m Chunk approved. Policy version: 2, hash: c4572f2d0f53
+[32m$ [0m[1msleep 6; openshell sandbox exec -n adv -- curl -s https://postman-echo.com/get | jq -c '{url}'[0m
+[1;39m{[0m[1;34m"url"[0m[1;39m:[0m[0;32m"https://postman-echo.com/get"[0m[1;39m}[0m
+
+[36m# Agent-authored proposals over policy.local[0m
+[32m$ [0m[1mopenshell settings set adv --key agent_policy_proposals_enabled --value true[0m
+[32;1m✓[0m Set sandbox setting agent_policy_proposals_enabled=true for adv (revision 1)
+[32m$ [0m[1msleep 12; openshell sandbox exec -n adv -- curl -s 'http://policy.local/v1/denials?last=2' | jq .[0m
+[1;39m{[0m
+  [1;34m"denials"[0m[1;39m:[0m [1;39m[[0m
+    [0;32m"2026-10-17T12:09:14.339Z OCSF NET:OPEN [MED] DENIED /usr/bin/curl(0) -> postman-echo.com:443 [reason:transparent_tcp_policy_denied]"[0m[1;39m,[0m
+    [0;32m"2026-10-17T12:09:14.336Z OCSF NET:REFUSE [MED] DENIED postman-echo.com [reason:policy_dns_ineligible]"[0m
+  [1;39m][0m[1;39m,[0m
+  [1;34m"log_available"[0m[1;39m:[0m [0;39mtrue[0m
+[1;39m}[0m
+[32m$ [0m[1mcat labs/10-policy-advisor/proposal.json[0m
+{
+  "intent_summary": "Let curl read the status endpoint on postman-echo.com.",
+  "operations": [
+    {
+      "addRule": {
+        "ruleName": "echo_status_read",
+        "rule": {
+          "name": "echo_status_read",
+          "endpoints": [
+            {
+              "host": "postman-echo.com",
+              "port": 443,
+              "protocol": "rest",
+              "enforcement": "enforce",
+              "rules": [{ "allow": { "method": "GET", "path": "/status/200" } }]
+            }
+          ],
+          "binaries": [{ "path": "/usr/bin/curl" }]
+        }
+      }
+    }
+  ]
+}
+[32m$ [0m[1mopenshell sandbox exec -n adv -- curl -s -X POST -H 'Content-Type: application/json' --data-binary @- http://policy.local/v1/proposals < labs/10-policy-advisor/proposal.json | jq .[0m
+[1;39m{[0m
+  [1;34m"status"[0m[1;39m:[0m [0;32m"submitted"[0m[1;39m,[0m
+  [1;34m"accepted_chunks"[0m[1;39m:[0m [0;39m1[0m[1;39m,[0m
+  [1;34m"rejected_chunks"[0m[1;39m:[0m [0;39m0[0m[1;39m,[0m
+  [1;34m"rejection_reasons"[0m[1;39m:[0m [1;39m[][0m[1;39m,[0m
+  [1;34m"accepted_chunk_ids"[0m[1;39m:[0m [1;39m[[0m
+    [0;32m"58c2551d-e4e1-41b9-b57c-24026b1ff623"[0m
+  [1;39m][0m
+[1;39m}[0m
+[32m$ [0m[1mopenshell rule get adv --status pending[0m
+[36;1mNetwork Rules:[0m  (version 2, 1 chunk)
+
+  [2mChunk:[0m 58c2551d-e4e1-41b9-b57c-24026b1ff623
+  [2mStatus:[0m [33mpending[0m
+  [2mRule:[0m echo_status_read
+  [2mBinary:[0m /usr/bin/curl
+  [2mConfidence:[0m 75%
+  [2mRationale:[0m Let curl read the status endpoint on postman-echo.com.
+  [2mProver:[0m [36mprover: no new findings[0m
+  [2mCandidate:[0m d94e0a62505f
+  [2mEndpoints:[0m postman-echo.com:443 [L7 rest, allow GET /status/200]
+  [2mBinaries:[0m /usr/bin/curl
+
+[32m$ [0m[1mCHUNK=$(openshell rule get adv --status pending | awk '/Chunk:/ {print $2; exit}'); openshell rule reject adv --chunk-id $CHUNK --reason 'Not needed for this task.' && openshell sandbox exec -n adv -- curl -s http://policy.local/v1/proposals/$CHUNK | jq '{status, rejection_reason}'[0m
+[32;1mOK[0m Chunk rejected.
+[1;39m{[0m
+  [1;34m"status"[0m[1;39m:[0m [0;32m"rejected"[0m[1;39m,[0m
+  [1;34m"rejection_reason"[0m[1;39m:[0m [0;32m"Not needed for this task."[0m
+[1;39m}[0m
+
+[36m# Automatic approval for low-risk drafts[0m
+[32m$ [0m[1mopenshell sandbox create --name auto --from openshell-training/tools:0.1.4 --no-auto-providers --approval-mode auto --detach[0m
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36;1mCreated sandbox:[0m [1mauto[0m
+[36m⠁[0m  (0s)                                                                                                       [2K
+[36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell sandbox exec -n auto -- curl -s -o /dev/null -w '%{http_code}\n' --max-time 5 https://example.com[0m
+000
+[2m[exit 7][0m
+[32m$ [0m[1msleep 10; openshell sandbox exec -n auto -- curl -s -o /dev/null -w '%{http_code}\n' --max-time 5 https://example.com[0m
+200
+[32m$ [0m[1mopenshell rule get auto | grep -E 'Rule:|Status:'[0m
+  Status: approved
+  Rule: allow_example_com_443
+[32m$ [0m[1mopenshell sandbox delete adv auto[0m
+[32;1m✓[0m Sandbox adv deletion accepted; cleanup is pending
+[32;1m✓[0m Sandbox auto deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:11:21+01:00 [COMMAND_EXIT_CODE="0"]

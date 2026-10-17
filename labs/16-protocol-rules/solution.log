@@ -1,0 +1,66 @@
+Script started on 2026-10-17 13:16:39+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/16-protocol-rules/solution.sh" <not executed on terminal>]
+
+[36m# Lab 16 — Protocol-aware rules[0m
+[32m$ [0m[1mopenshell sandbox delete proto[0m
+[32m$ [0m[1mopenshell sandbox create --name proto --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mproto[0m                                                                                                                                                                                                      [36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠲[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell policy set proto --policy labs/16-protocol-rules/policy.yaml --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: ff911f3c43ca)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+
+[36m# GraphQL: queries yes, mutations no[0m
+[32m$ [0m[1mopenshell sandbox exec -n proto -- curl -s -X POST https://countries.trevorblades.com/graphql -H 'Content-Type: application/json' -d '{"query":"query { country(code:\"TR\") { name capital } }"}'; echo[0m
+^@{"data":{"country":{"capital":"Ankara","name":"Turkey"}}}
+[32m$ [0m[1mopenshell sandbox exec -n proto -- curl -s -X POST https://countries.trevorblades.com/graphql -H 'Content-Type: application/json' -d '{"query":"mutation { addCountry(code:\"XX\") { code } }"}' | jq -c '{error, detail}'[0m
+[1;39m{[0m[1;34m"error"[0m[1;39m:[0m[0;32m"policy_denied"[0m[1;39m,[0m[1;34m"detail"[0m[1;39m:[0m[0;32m"GraphQL operation blocked by endpoint policy"[0m[1;39m}[0m
+
+[36m# MCP: tools allowed by name[0m
+[32m$ [0m[1mopenshell sandbox exec -n proto -- curl -s -X POST https://mcp.deepwiki.com/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -H 'MCP-Protocol-Version: 2025-11-25' -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"read_wiki_structure","arguments":{"repoName":"NVIDIA/OpenShell"}}}' | sed -n 2p | cut -c1-240[0m
+data: {"jsonrpc":"2.0","id":1,"result":{"content":[{"type":"text","text":"Available pages for NVIDIA/OpenShell:\n\n- 1 OpenShell Overview\n- 2 Getting Started\n  - 2.1 Installation\n  - 2.2 Creating Your First Sandbox\n  - 2.3 System Requir
+[32m$ [0m[1mopenshell sandbox exec -n proto -- curl -s -X POST https://mcp.deepwiki.com/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -H 'MCP-Protocol-Version: 2025-11-25' -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"ask_wiki_question","arguments":{"repoName":"NVIDIA/OpenShell","question":"hi"}}}' | jq -c '{error, detail}'[0m
+[1;39m{[0m[1;34m"error"[0m[1;39m:[0m[0;32m"policy_denied"[0m[1;39m,[0m[1;34m"detail"[0m[1;39m:[0m[0;32m"MCP request blocked by a deny rule; ask the policy owner to review deny_rules and tool selectors"[0m[1;39m}[0m
+
+[36m# WebSocket: upgrade allowed on /raw, denied on /socketio[0m
+[32m$ [0m[1mfor p in raw socketio; do openshell sandbox exec -n proto -- curl -s -o /dev/null -w "$p %{http_code}\n" --http1.1 --max-time 5 -H 'Connection: Upgrade' -H 'Upgrade: websocket' -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' https://ws.postman-echo.com/$p; done[0m
+raw 101
+socketio 403
+
+[36m# Native TCP[0m
+[32m$ [0m[1mopenshell sandbox exec -n proto -- sh -c 'echo hello-tcp | timeout 8 nc -q 2 tcpbin.com 4242'[0m
+hello-tcp
+[32m$ [0m[1mopenshell sandbox delete proto[0m
+[32;1m✓[0m Sandbox proto deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:18:17+01:00 [COMMAND_EXIT_CODE="0"]

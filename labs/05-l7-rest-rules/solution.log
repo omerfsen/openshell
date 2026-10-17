@@ -1,0 +1,137 @@
+Script started on 2026-10-17 13:00:54+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/05-l7-rest-rules/solution.sh" <not executed on terminal>]
+
+[36m# Lab 05 — L7 REST rules: allow reads, block writes[0m
+[32m$ [0m[1mopenshell sandbox delete l7[0m
+[32m$ [0m[1mopenshell sandbox create --name l7 --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1ml7[0m                                                                                                                                                                                                         [36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K
+[36m# Read-only, inspected access to postman-echo.com for curl only[0m
+[32m$ [0m[1mopenshell policy update l7 --rule-name echo_api --binary /usr/bin/curl --add-endpoint postman-echo.com:443:read-only:rest:enforce --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: 6808a1458ec2)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+[32m$ [0m[1mopenshell sandbox exec -n l7 -- curl -s https://postman-echo.com/get; echo[0m
+^@{"args":{},"headers":{"host":"postman-echo.com","accept":"*/*","user-agent":"curl/8.5.0","x-forwarded-proto":"https","accept-encoding":"gzip, br"},"url":"https://postman-echo.com/get"}
+
+[36m# A write is answered by the supervisor, not by postman-echo[0m
+[32m$ [0m[1mopenshell sandbox exec -n l7 -- curl -s -X POST https://postman-echo.com/post -d '{"title":"oops"}' | jq .[0m
+[1;39m{[0m
+  [1;34m"error"[0m[1;39m:[0m [0;32m"policy_denied"[0m[1;39m,[0m
+  [1;34m"policy"[0m[1;39m:[0m [0;32m"echo_api"[0m[1;39m,[0m
+  [1;34m"rule"[0m[1;39m:[0m [0;32m"POST /post"[0m[1;39m,[0m
+  [1;34m"detail"[0m[1;39m:[0m [0;32m"POST /post not permitted by policy"[0m[1;39m,[0m
+  [1;34m"layer"[0m[1;39m:[0m [0;32m"l7"[0m[1;39m,[0m
+  [1;34m"protocol"[0m[1;39m:[0m [0;32m"rest"[0m[1;39m,[0m
+  [1;34m"method"[0m[1;39m:[0m [0;32m"POST"[0m[1;39m,[0m
+  [1;34m"path"[0m[1;39m:[0m [0;32m"/post"[0m[1;39m,[0m
+  [1;34m"host"[0m[1;39m:[0m [0;32m"postman-echo.com"[0m[1;39m,[0m
+  [1;34m"port"[0m[1;39m:[0m [0;39m443[0m[1;39m,[0m
+  [1;34m"binary"[0m[1;39m:[0m [0;32m"/usr/bin/curl"[0m[1;39m,[0m
+  [1;34m"rule_missing"[0m[1;39m:[0m [1;39m{[0m
+    [1;34m"type"[0m[1;39m:[0m [0;32m"rest_allow"[0m[1;39m,[0m
+    [1;34m"layer"[0m[1;39m:[0m [0;32m"l7"[0m[1;39m,[0m
+    [1;34m"method"[0m[1;39m:[0m [0;32m"POST"[0m[1;39m,[0m
+    [1;34m"path"[0m[1;39m:[0m [0;32m"/post"[0m[1;39m,[0m
+    [1;34m"host"[0m[1;39m:[0m [0;32m"postman-echo.com"[0m[1;39m,[0m
+    [1;34m"port"[0m[1;39m:[0m [0;39m443[0m[1;39m,[0m
+    [1;34m"binary"[0m[1;39m:[0m [0;32m"/usr/bin/curl"[0m
+  [1;39m}[0m[1;39m,[0m
+  [1;34m"next_steps"[0m[1;39m:[0m [1;39m[][0m
+[1;39m}[0m
+
+[36m# Allow one extra write, then deny one read path[0m
+[32m$ [0m[1mopenshell policy update l7 --rule-name echo_api --binary /usr/bin/curl --add-allow 'postman-echo.com:443:POST:/post' --wait[0m
+[33;1m![0m expanded access preset 'read-only' to explicit rules for endpoint postman-echo.com:443
+[32;1m✓[0m Policy version 3 submitted (hash: f4e7ffd36cfb)
+[32;1m✓[0m Policy version 3 loaded (active version: 3)
+[32m$ [0m[1mopenshell policy update l7 --rule-name echo_api --binary /usr/bin/curl --add-deny 'postman-echo.com:443:GET:/headers' --wait[0m
+[32;1m✓[0m Policy version 4 submitted (hash: 00110741cb5e)
+[32;1m✓[0m Policy version 4 loaded (active version: 4)
+[32m$ [0m[1mopenshell sandbox exec -n l7 -- curl -s -o /dev/null -w 'GET /get:     %{http_code}\n' https://postman-echo.com/get[0m
+GET /get:     200
+[32m$ [0m[1mopenshell sandbox exec -n l7 -- curl -s -o /dev/null -w 'GET /headers: %{http_code}\n' https://postman-echo.com/headers[0m
+GET /headers: 403
+
+[36m# Audit mode: violations pass but are logged[0m
+[32m$ [0m[1mopenshell policy update l7 --rule-name httpbin_audit --binary /usr/bin/curl --add-endpoint httpbin.org:443:read-only:rest:audit --wait[0m
+[32;1m✓[0m Policy version 5 submitted (hash: 50f0ee8e698b)
+[32;1m✓[0m Policy version 5 loaded (active version: 5)
+[32m$ [0m[1mopenshell sandbox exec -n l7 -- curl -s -o /dev/null -w 'audit POST: %{http_code}\n' -X POST https://httpbin.org/post[0m
+audit POST: 200
+[32m$ [0m[1msleep 2; openshell logs l7 --since 2m --source sandbox | grep -E 'HTTP:' | tail -4[0m
+Warning: log buffer contains only the last 106 lines; --since results may be incomplete.
+[1792238483.322] [sandbox] [OCSF ] [ocsf] HTTP:POST [MED] DENIED POST http://postman-echo.com:443/post [policy:echo_api engine:l7] [reason:L7_REQUEST deny POST postman-echo.com:443/post reason=POST /post not permitted by policy]
+[1792238507.861] [sandbox] [OCSF ] [ocsf] HTTP:GET [INFO] ALLOWED GET http://postman-echo.com:443/get [policy:echo_api engine:l7]
+[1792238514.472] [sandbox] [OCSF ] [ocsf] HTTP:GET [MED] DENIED GET http://postman-echo.com:443/headers [policy:echo_api engine:l7] [reason:L7_REQUEST deny GET postman-echo.com:443/headers reason=GET /headers blocked by deny rule]
+[1792238537.985] [sandbox] [OCSF ] [ocsf] HTTP:POST [INFO] ALLOWED POST http://httpbin.org:443/post [policy:httpbin_audit engine:l7]
+
+[36m# The resulting base policy[0m
+[32m$ [0m[1mopenshell policy get l7 --base | sed -n '/network_policies/,$p'[0m
+network_policies:
+  echo_api:
+    name: echo_api
+    endpoints:
+      - host: postman-echo.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow:
+              method: GET
+              path: "**"
+          - allow:
+              method: HEAD
+              path: "**"
+          - allow:
+              method: OPTIONS
+              path: "**"
+          - allow:
+              method: POST
+              path: /post
+        deny_rules:
+          - method: GET
+            path: /headers
+    binaries:
+      - path: /usr/bin/curl
+  httpbin_audit:
+    name: httpbin_audit
+    endpoints:
+      - host: httpbin.org
+        port: 443
+        protocol: rest
+        enforcement: audit
+        access: read-only
+    binaries:
+      - path: /usr/bin/curl
+[36m# Clean up[0m
+[32m$ [0m[1mopenshell sandbox delete l7[0m
+[32;1m✓[0m Sandbox l7 deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:02:40+01:00 [COMMAND_EXIT_CODE="0"]

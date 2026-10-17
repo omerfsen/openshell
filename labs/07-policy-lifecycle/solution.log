@@ -1,0 +1,102 @@
+Script started on 2026-10-17 13:04:12+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/07-policy-lifecycle/solution.sh" <not executed on terminal>]
+
+[36m# Lab 07 — Policy lifecycle[0m
+[32m$ [0m[1mopenshell sandbox delete life[0m
+[32m$ [0m[1mopenshell sandbox create --name life --from openshell-training/tools:0.1.4 --policy labs/07-policy-lifecycle/policy.yaml --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mlife[0m                                                                                                                                                                                                       [36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K[32m$ [0m[1mopenshell policy get life --base | sed -n '/network_policies/,$p'[0m
+network_policies:
+  echo_api:
+    name: echo_api
+    endpoints:
+      - host: postman-echo.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+    binaries:
+      - path: /usr/bin/curl
+[36m# Preview, then apply and verify[0m
+[32m$ [0m[1mopenshell policy update life --rule-name example --binary /usr/bin/curl --add-endpoint example.com:443 --dry-run | tail -8[0m
+✓ Dry run preview for 1 incremental policy operation(s)
+        - path: /usr/bin/curl
+    example:
+      name: example
+      endpoints:
+        - host: example.com
+          port: 443
+      binaries:
+        - path: /usr/bin/curl
+[32m$ [0m[1mopenshell policy update life --rule-name example --binary /usr/bin/curl --add-endpoint example.com:443 --wait[0m
+[32;1m✓[0m Policy version 2 submitted (hash: abfd6825bd76)
+[32;1m✓[0m Policy version 2 loaded (active version: 2)
+[32m$ [0m[1mopenshell sandbox exec -n life -- curl -s -o /dev/null -w '%{http_code}\n' https://example.com[0m
+^@200
+
+[36m# Edit the whole policy as JSON[0m
+[32m$ [0m[1mopenshell policy get life --base --output json | jq -e '.policy' | jq 'del(.network_policies.example)' > /tmp/edited.json[0m
+[32m$ [0m[1mopenshell policy set life --policy /tmp/edited.json --wait[0m
+[32;1m✓[0m Policy version 3 submitted (hash: 6808a1458ec2)
+[32;1m✓[0m Policy version 3 loaded (active version: 3)
+[32m$ [0m[1mopenshell sandbox exec -n life -- curl -s -o /dev/null -w '%{http_code}\n' --max-time 8 https://example.com[0m
+000
+[2m[exit 7][0m
+
+[36m# Roll back to revision 2 as a new revision[0m
+[32m$ [0m[1mopenshell policy list life[0m
+VERSION  HASH           STATUS       CREATED                  ERROR
+3        6808a1458ec2   Loaded       1792238697080            
+2        abfd6825bd76   Superseded   1792238677074            
+1        6808a1458ec2   Superseded   1792238659481            
+[32m$ [0m[1mopenshell policy get life --rev 2 --base --output json | jq -e '.policy' > /tmp/rev2.json && openshell policy set life --policy /tmp/rev2.json --wait[0m
+[32;1m✓[0m Policy version 4 submitted (hash: abfd6825bd76)
+[32;1m✓[0m Policy version 4 loaded (active version: 4)
+[32m$ [0m[1mopenshell sandbox exec -n life -- curl -s -o /dev/null -w '%{http_code}\n' https://example.com[0m
+200
+
+[36m# A global policy overrides every sandbox[0m
+[32m$ [0m[1mopenshell policy set --global --policy labs/07-policy-lifecycle/global-policy.yaml --yes[0m
+[32;1m✓[0m Global policy configured (hash: a45a8ff3564f, settings revision: 21)
+[32m$ [0m[1msleep 12; openshell sandbox exec -n life -- curl -s -o /dev/null -w '%{http_code}\n' --max-time 8 https://example.com[0m
+000
+[2m[exit 7][0m
+[32m$ [0m[1mopenshell policy update life --rule-name x --binary /usr/bin/curl --add-endpoint example.com:443 --wait[0m
+Error:   [31m×[0m policy is managed globally; delete the global policy before using `openshell policy update`
+
+[2m[exit 1][0m
+[32m$ [0m[1mopenshell policy delete --global --yes[0m
+[32;1m✓[0m Deleted global setting policy (revision 22)
+[32m$ [0m[1msleep 12; openshell sandbox exec -n life -- curl -s -o /dev/null -w '%{http_code}\n' https://example.com[0m
+200
+[32m$ [0m[1mopenshell sandbox delete life[0m
+[32;1m✓[0m Sandbox life deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:06:29+01:00 [COMMAND_EXIT_CODE="0"]

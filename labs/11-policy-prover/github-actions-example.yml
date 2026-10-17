@@ -1,0 +1,26 @@
+# Example GitHub Actions workflow: block any pull request whose sandbox
+# policies grant more than the approved boundary. Copy to
+# .github/workflows/prove-policies.yml in the repository that holds your policies.
+name: prove-policies
+
+on:
+  pull_request:
+    paths: ["policies/**"]
+
+jobs:
+  prove:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install openshell-prover 0.1.4
+        run: |
+          base=https://github.com/NVIDIA/OpenShell/releases/download/v0.1.4
+          curl -LsSfO "$base/openshell-prover-x86_64-unknown-linux-musl.tar.gz"
+          curl -LsSfO "$base/openshell-prover-checksums-sha256.txt"
+          grep openshell-prover-x86_64-unknown-linux-musl.tar.gz openshell-prover-checksums-sha256.txt | sha256sum -c -
+          tar -xzf openshell-prover-x86_64-unknown-linux-musl.tar.gz
+          sudo install -m 0755 "$(find . -name openshell-prover -type f | head -1)" /usr/local/bin/
+
+      - name: Prove policies against the boundary
+        run: ./prove-all.sh policies/boundary.yaml policies/sandboxes/*.yaml

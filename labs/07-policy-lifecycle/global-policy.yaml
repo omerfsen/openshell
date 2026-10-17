@@ -1,0 +1,13 @@
+# A gateway-wide policy: no network access for any sandbox. While it is
+# active it replaces every sandbox's own policy and blocks policy changes.
+version: 1
+
+filesystem_policy:
+  include_workdir: true
+  read_only: [/bin, /usr, /lib, /proc, /dev/urandom, /etc, /var/log]
+  read_write: [/tmp, /dev/null]
+
+landlock:
+  compatibility: best_effort
+
+network_policies: {}

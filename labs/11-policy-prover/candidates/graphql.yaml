@@ -1,0 +1,14 @@
+# Unsupported: the prover models L4 and REST only, so it refuses to guess.
+version: 1
+network_policies:
+  countries_graphql:
+    endpoints:
+      - host: countries.trevorblades.com
+        port: 443
+        path: /graphql
+        protocol: graphql
+        enforcement: enforce
+        rules:
+          - allow: { operation_type: query }
+    binaries:
+      - path: /usr/bin/curl

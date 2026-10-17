@@ -1,0 +1,78 @@
+Script started on 2026-10-17 13:07:59+01:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/09-files-and-ssh/solution.sh" <not executed on terminal>]
+
+[36m# Lab 09 — Files, SSH, and editors[0m
+[32m$ [0m[1mopenshell sandbox delete files[0m
+[32m$ [0m[1mmkdir -p labs/09-files-and-ssh/sample-project/build && echo junk > labs/09-files-and-ssh/sample-project/build/artifact.bin && echo junk > labs/09-files-and-ssh/sample-project/debug.log[0m
+[32m$ [0m[1mopenshell sandbox create --name files --from openshell-training/tools:0.1.4 --no-auto-providers --detach[0m
+                                                                                                              [36;1mCreated sandbox:[0m [1mfiles[0m                                                                                                                                                                                                      [36m⠁[0m  (0s)                                                                                                       [2K[36m⠁[0m Requesting sandbox... (0s)                                                                                  [2K[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Requesting sandbox... (0s)                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... (0s)                                                                                       [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [1A[2K[1B[2K[1A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Pulling image... [2mopenshell-training/tools:0.1.4[0m (0s)                                                        [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠁[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... (0s)                                                                                    [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠉[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠙[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠚[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (0s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠂[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m
+[36m⠒[0m Starting sandbox... [2mContainer created[0m (1s)                                                                  [2A[2K[1B[2K[1B[2K[2A[32;1m✓[0m Sandbox allocated [2m(0s)[0m
+[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [1A[2K[1B[2K[1A[32;1m✓[0m Image already present [2m(0s)[0m                                                                                  [2K
+[36m# Upload respects .gitignore[0m
+[32m$ [0m[1mopenshell sandbox upload files labs/09-files-and-ssh/sample-project[0m
+Uploading labs/09-files-and-ssh/sample-project -> sandbox:~
+[32;1m✓[0m Upload complete
+[32m$ [0m[1mopenshell sandbox exec -n files -- find sample-project -type f[0m
+^@sample-project/README.md
+sample-project/src/app.py
+sample-project/.gitignore
+[32m$ [0m[1mopenshell sandbox exec -n files -- python3 sample-project/src/app.py[0m
+hello from the uploaded project
+
+[36m# Download is confined to the working directory[0m
+[32m$ [0m[1mopenshell sandbox exec -n files -- sh -c 'mkdir -p out && date > out/report.txt'[0m
+[32m$ [0m[1mopenshell sandbox download files out /tmp/lab09-out && cat /tmp/lab09-out/report.txt[0m
+Downloading sandbox:out -> /tmp/lab09-out
+[32;1m✓[0m Download complete
+Sat Oct 17 12:08:34 UTC 2026
+[32m$ [0m[1mopenshell sandbox download files /etc/passwd /tmp/lab09-passwd[0m
+Downloading sandbox:/etc/passwd -> /tmp/lab09-passwd
+Error:   [31m×[0m sandbox source path '/etc/passwd' is outside the sandbox workspace (/home/ubuntu)
+
+[2m[exit 1][0m
+
+[36m# An SSH config block for any SSH client[0m
+[32m$ [0m[1mopenshell sandbox ssh-config files[0m
+Host openshell-files.default
+    User sandbox
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    GlobalKnownHostsFile /dev/null
+    LogLevel ERROR
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+    ProxyCommand /usr/bin/openshell ssh-proxy --gateway-name openshell --name files --workspace default
+
+[36m# Clean up[0m
+[32m$ [0m[1mopenshell sandbox delete files; rm -rf /tmp/lab09-out labs/09-files-and-ssh/sample-project/build labs/09-files-and-ssh/sample-project/debug.log[0m
+[32;1m✓[0m Sandbox files deletion accepted; cleanup is pending
+
+Script done on 2026-10-17 13:09:02+01:00 [COMMAND_EXIT_CODE="0"]

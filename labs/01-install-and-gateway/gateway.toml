@@ -1,0 +1,17 @@
+# Example gateway configuration for the local Debian/Ubuntu gateway.
+# Copy to ~/.config/openshell/gateway.toml, preflight, then restart the
+# openshell-gateway user service. Omit the file to keep built-in defaults.
+[openshell]
+version = 2
+
+[openshell.gateway]
+bind_address   = "127.0.0.1:17670"
+log_level      = "info"
+compute_driver = "docker"
+
+[openshell.drivers.docker]
+socket_path        = "/var/run/docker.sock"
+# Sandboxes created without --from use the training tools image.
+default_image      = "openshell-training/tools:0.1.4"
+image_pull_policy  = "if_not_present"
+sandbox_pids_limit = 1024
