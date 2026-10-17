@@ -20,6 +20,8 @@ you can watch or run.
 >
 > *Community training material, not an official NVIDIA product.*
 
+The article behind this course: [Giving AI agents a seatbelt via OpenShell](https://www.linkedin.com/pulse/giving-ai-agents-seatbelt-via-openshell-omer-sen-bvjde).
+
 ## What OpenShell does, in one picture
 
 ```text
