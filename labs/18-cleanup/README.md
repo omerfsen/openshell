@@ -75,3 +75,6 @@ bats labs/18-cleanup/test.bats
 ```
 
 Congratulations, you have finished the course. 🎉
+
+**Bonus:** [Lab 19 — Upgrade to 0.1.6 and what's new](../19-whats-new-0.1.6/README.md) walks
+through a real upgrade, the new features, and how to roll back.

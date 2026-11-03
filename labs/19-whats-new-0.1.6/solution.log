@@ -1,0 +1,99 @@
+Script started on 2026-11-03 19:18:16+00:00 [COMMAND="stty cols 110 rows 32 2>/dev/null; labs/19-whats-new-0.1.6/solution.sh" <not executed on terminal>]
+
+[36m# Lab 19 — What's new in 0.1.6 (the host is already upgraded)[0m
+[32m$ [0m[1mopenshell sandbox delete lab19-new lab19-cfg[0m
+[32m$ [0m[1mopenshell --version; openshell status | grep -E "Status|Authentication|Version"[0m
+openshell 0.1.6
+Server Status
+  Status: Connected
+  Authentication: Authenticated (mTLS transport)
+  Version: 0.1.6
+[32m$ [0m[1mjournalctl --user -u openshell-gateway -b | grep -o 'mTLS user authentication enabled' | tail -1[0m
+mTLS user authentication enabled
+
+[36m# A request with no credential is refused, and audited[0m
+[32m$ [0m[1mcurl -sk --http2 -i -X POST -H 'content-type: application/grpc' -H 'te: trailers' --data-binary @/dev/null https://127.0.0.1:17670/openshell.v1.OpenShell/ListSandboxes | grep -iE 'grpc-(status|message)'[0m
+grpc-status: 16
+grpc-message: missing%20authorization%20header
+[32m$ [0m[1mjournalctl --user -u openshell-gateway --since -1min | grep -o 'OCSF AUTH:LOGON.*DENIED.*' | tail -1[0m
+OCSF AUTH:LOGON [LOW] DENIED unknown from 127.0.0.1:57384 [op:/openshell.v1.OpenShell/ListSandboxes reason:missing_credential]
+
+[36m# --env-from and --annotation[0m
+[32m$ [0m[1mexport LAB19_TOKEN=demo-value-19; openshell sandbox create --name lab19-new --from openshell-training/tools:0.1.4 --no-auto-providers --detach --env-from LAB19_TOKEN --env-from API_TOKEN=LAB19_TOKEN --annotation team=platform --annotation "note=has spaces / and =" | tail -1[0m
+⚠ API_TOKEN looks like a credential passed as a plain environment variable.
+  The agent inside the sandbox can read this value directly.
+
+  To hide it from the agent, use a provider instead of --env.
+  See: https://docs.nvidia.com/openshell/latest/how-it-works/providers/overview
+
+⚠ LAB19_TOKEN looks like a credential passed as a plain environment variable.
+  The agent inside the sandbox can read this value directly.
+
+  To hide it from the agent, use a provider instead of --env.
+  See: https://docs.nvidia.com/openshell/latest/how-it-works/providers/overview
+
+[0.2s] Starting sandbox Container created
+[32m$ [0m[1mopenshell sandbox exec -n lab19-new --no-login-shell -- sh -c 'echo "LAB19_TOKEN=$LAB19_TOKEN API_TOKEN=$API_TOKEN"'[0m
+^@LAB19_TOKEN=demo-value-19 API_TOKEN=demo-value-19
+[32m$ [0m[1mopenshell sandbox create --name lab19-bad --from openshell-training/tools:0.1.4 --no-auto-providers --detach --env-from NOPE_NOT_SET[0m
+Error:   [31m×[0m --env-from source environment variable 'NOPE_NOT_SET' is not set or is not valid Unicode
+
+[2m[exit 1][0m
+[32m$ [0m[1mopenshell sandbox get lab19-new | sed -n '/Annotations/,/Conditions/p' | grep -v internal.openshell[0m
+  Annotations: 
+    note: has spaces / and =
+    team: platform
+  Conditions:
+[32m$ [0m[1mopenshell sandbox create --name lab19-bad --from openshell-training/tools:0.1.4 --no-auto-providers --detach --annotation internal.openshell.ai/x=1[0m
+Error:   [31m×[0m code: 'Client specified an invalid argument', message: "annotations key 'internal.openshell.ai/x' uses
+  [31m│[0m the reserved 'internal.openshell.ai/' prefix"
+
+[2m[exit 1][0m
+
+[36m# Suspend needs a driver that supports it; Docker does not[0m
+[32m$ [0m[1mopenshell sandbox suspend lab19-new[0m
+Error:   [31m×[0m code: 'The system is not in a state required for the operation's execution', message: "compute driver
+  [31m│[0m does not support sandbox suspend"
+
+[2m[exit 1][0m
+
+[36m# Policy delivery: poll (default) first[0m
+[32m$ [0m[1mopenshell sandbox create --name lab19-cfg --from openshell-training/tools:0.1.4 --policy labs/07-policy-lifecycle/policy.yaml --no-auto-providers --detach | tail -1[0m
+[0.2s] Starting sandbox Container created
+[32m$ [0m[1mtime openshell policy update lab19-cfg --rule-name r1 --binary /usr/bin/curl --add-endpoint example1.com:443 --wait | tail -1[0m
+✓ Policy version 2 submitted (hash: 5bff999ae5d1)
+✓ Policy version 2 loaded (active version: 2)
+
+real	0m4.112s
+user	0m0.074s
+sys	0m0.021s
+
+[36m# Now push: one line in gateway.toml[0m
+[32m$ [0m[1mgrep config_delivery_mode labs/19-whats-new-0.1.6/gateway-push.toml[0m
+config_delivery_mode = "push"
+[32m$ [0m[1mopenshell-gateway config preflight --path labs/19-whats-new-0.1.6/gateway-push.toml && echo valid[0m
+valid
+[32m$ [0m[1mcp ~/.config/openshell/gateway.toml ~/.config/openshell/gateway.toml.before-lab19 2>/dev/null; true[0m
+[32m$ [0m[1mcp labs/19-whats-new-0.1.6/gateway-push.toml ~/.config/openshell/gateway.toml && systemctl --user restart openshell-gateway[0m
+[32m$ [0m[1mfor i in $(seq 40); do openshell sandbox list 2>/dev/null | grep -q "lab19-cfg.*Ready" && break; sleep 1; done; openshell sandbox list[0m
+[1mNAME     [0m  [1mCREATED            [0m  [1mPHASE[0m
+lab19-new  2026-11-03 19:18:53  [32mReady[0m
+lab19-cfg  2026-11-03 19:19:31  [32mReady[0m
+[32m$ [0m[1mtime openshell policy update lab19-cfg --rule-name r2 --binary /usr/bin/curl --add-endpoint example2.com:443 --wait | tail -1[0m
+✓ Policy version 3 submitted (hash: bcf4011bc2a4)
+✓ Policy version 3 loaded (active version: 3)
+
+real	0m1.092s
+user	0m0.071s
+sys	0m0.016s
+
+[36m# Clean up: back to polling[0m
+[32m$ [0m[1mopenshell sandbox delete lab19-new lab19-cfg[0m
+[32;1m✓[0m Sandbox lab19-new deletion accepted; cleanup is pending
+[32;1m✓[0m Sandbox lab19-cfg deletion accepted; cleanup is pending
+[32m$ [0m[1mif [ -f ~/.config/openshell/gateway.toml.before-lab19 ]; then mv ~/.config/openshell/gateway.toml.before-lab19 ~/.config/openshell/gateway.toml; else rm ~/.config/openshell/gateway.toml; fi; systemctl --user restart openshell-gateway[0m
+[32m$ [0m[1mfor i in $(seq 20); do openshell status 2>/dev/null | grep -q Connected && break; sleep 1; done; openshell status | grep Status[0m
+Server Status
+  Status: Connected
+
+Script done on 2026-11-03 19:20:55+00:00 [COMMAND_EXIT_CODE="0"]
