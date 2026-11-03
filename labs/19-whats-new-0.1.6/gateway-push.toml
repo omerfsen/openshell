@@ -1,0 +1,19 @@
+# Lab 19: the Lab 01 gateway config plus push-based config delivery (0.1.5+).
+# Copy to ~/.config/openshell/gateway.toml, preflight, then restart the
+# openshell-gateway user service. Remove the file to go back to defaults.
+[openshell]
+version = 2
+
+[openshell.gateway]
+bind_address         = "127.0.0.1:17670"
+log_level            = "info"
+compute_driver       = "docker"
+# Send policy and setting changes over the supervisor session instead of
+# letting supervisors poll for them every ~10 seconds.
+config_delivery_mode = "push"
+
+[openshell.drivers.docker]
+socket_path        = "/var/run/docker.sock"
+default_image      = "openshell-training/tools:0.1.4"
+image_pull_policy  = "if_not_present"
+sandbox_pids_limit = 1024

@@ -82,6 +82,7 @@ All commands run from the repository root.
 | 16 | [Protocol-aware rules](labs/16-protocol-rules/README.md) | GraphQL operations, **MCP tool calls**, WebSocket, raw TCP | L7 protocols |
 | 17 | [Capstone: run a real AI agent](labs/17-run-an-agent/README.md) | OpenCode + OpenRouter (free model) under policy, granting access as it asks | Everything together |
 | 18 | [Clean up, upgrade, uninstall](labs/18-cleanup/README.md) | Cleanup script, upgrades, uninstall, where to go next | Operations |
+| 19 | [Bonus: upgrade to 0.1.6 and what's new](labs/19-whats-new-0.1.6/README.md) | Upgrade and roll back, gateway auth audit events, `--env-from`, `--annotation`, suspend, push config delivery | 0.1.5 and 0.1.6 features |
 
 Time: about **6–7 hours** in total. Labs 00–08 are the core path (~3 hours). After Lab 08,
 the labs are mostly independent: pick the ones you need.
